@@ -6,7 +6,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: inset 13px -114px 0px -112px rgba(0,0,0,0.3);
+  /* box-shadow: inset 13px -114px 0px -112px rgba(0,0,0,0.3); */
 }
 
 .home__title h2{
@@ -32,4 +32,8 @@
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
+}
+
+.home__Profile {
+  margin-right: 25px;
 }

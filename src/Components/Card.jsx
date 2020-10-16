@@ -1,19 +1,19 @@
 import React from 'react'
 import "./Card.css"
+import Avatar from '@material-ui/core/Avatar';
 
-export default function Card() {
+export default function Card({subject}) {
     
 
     return (
         <div className="wrapper">
     <div className="header">
-        <img src="https://drive.google.com/uc?export=view&id=1WEQy5ZhyjiZhPsrAvzzTpWV_ScYjp_ul" />
+    <Avatar alt={subject} src="/broken-image.jpg" className="Aimg" />
     </div>
 
     <div className="body">
         <div className="text">
-            <h1>Jean Dupont</h1>
-            <span>UX / UI Designer</span>
+    <h1>{subject}</h1>
         </div>
     </div>
 </div>
