@@ -1,0 +1,33 @@
+.joinClass__bgCover{
+    display: none;
+    position: fixed;
+    height: 100vh;
+    width: 100vw;
+    z-index: 91;
+    background-color: rgba(12, 12, 12, 0.63);
+    transition: 1s;
+}
+
+.joinCard__input{
+    background-color: whitesmoke;
+    border: 1px solid lightgray;
+    padding: 5px 5px;
+}
+
+.joinCard__input:focus {
+    outline-width: 0;    
+    }
+
+.joinClass__center{
+    top: 40%;
+    left: 50%;
+    transform:         translate(-50%,-50%);
+}
+
+.join__btn{
+    padding: 20px;
+}
+
+.join__btn > .MuiButtonBase-root {
+    color: rebeccapurple; 
+}

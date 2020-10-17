@@ -6,6 +6,7 @@ import Add from "./Components/Add.jsx"
 import Header from "./Components/Header.jsx"
 import JoinClassPopup from "./Components/JoinClassPopup.jsx"
 import CreateClassLayout from "./Components/CreateClassLayout.jsx"
+import JoinClassLayout from "./Components/JoinClassLayout.jsx"
 
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
 
 <JoinClassPopup/>
 <CreateClassLayout/>
+<JoinClassLayout/>
 
      <Header/>
       <Divider/>

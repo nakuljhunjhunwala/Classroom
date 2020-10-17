@@ -17,7 +17,9 @@ export default function Joinclasspopup(props) {
                     Create
                 </ButtonBase>
                 <Divider/>
-                <ButtonBase className="joinClass__btn">
+                <ButtonBase className="joinClass__btn" onClick={()=>{
+            document.getElementById("joinClass__bgCover").style.display = "block";
+        }}>
                     Join
                 </ButtonBase>
             </div>
