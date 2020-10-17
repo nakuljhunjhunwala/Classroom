@@ -1,0 +1,33 @@
+.createClass__bgCover{
+    display: none;
+    position: fixed;
+    height: 100vh;
+    width: 100vw;
+    z-index: 91;
+    background-color: rgba(12, 12, 12, 0.63);
+    transition: 1s;
+}
+
+.createCard__input{
+    background-color: whitesmoke;
+    border: 1px solid lightgray;
+    padding: 5px 5px;
+}
+
+.createCard__input:focus {
+    outline-width: 0;    
+    }
+
+.createClass__center{
+    top: 40%;
+    left: 50%;
+    transform:         translate(-50%,-50%);
+}
+
+.Create__btn{
+    padding: 20px;
+}
+
+.Create__btn > .MuiButtonBase-root {
+    color: rebeccapurple; 
+}

@@ -1,0 +1,28 @@
+
+.home__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* box-shadow: inset 13px -114px 0px -112px rgba(0,0,0,0.3); */
+  }
+
+  
+.home__title h2{
+    padding: 10px 0px 0px;
+    font-weight: 500;
+    font-size: 22px;
+    color: #5F6368;
+    line-height: 22px;
+    top: -0.375rem;
+  }
+  
+  .home__title{
+    height: 5rem;
+    padding-left: 1.5rem;
+    padding: 0 0 0 24px;
+  }
+
+  
+.home__profile {
+    margin-right: 25px;
+  }

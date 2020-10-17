@@ -14,7 +14,9 @@ export default function Card({subject}) {
     <div className="body">
         <div className="text">
     <h1>{subject}</h1>
+    <span>Subject code:- </span>
         </div>
+        
     </div>
 </div>
     )
