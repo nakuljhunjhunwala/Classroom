@@ -1,37 +1,29 @@
 import React from 'react';
 import './App.css';
-import Card from "./Components/Card.jsx"
-import Divider from '@material-ui/core/Divider';
-import Add from "./Components/Add.jsx"
-import Header from "./Components/Header.jsx"
-import JoinClassPopup from "./Components/JoinClassPopup.jsx"
-import CreateClassLayout from "./Components/CreateClassLayout.jsx"
-import JoinClassLayout from "./Components/JoinClassLayout.jsx"
+import { BrowserRouter as Router,Switch,Route } from 'react-router-dom';
+import Home from "./Routes/Home.jsx"
+import ChatBox from "./Routes/ChatBox.jsx"
 
 
 function App() {
   return (
     <div className="App">
 
-<JoinClassPopup/>
-<CreateClassLayout/>
-<JoinClassLayout/>
-
-     <Header/>
-      <Divider/>
-
-      <div className="home__container">
-
-    <Card subject="Python"></Card>
-    <Card subject="Business"></Card>
-    <Card subject="C++"></Card>
-    <Card subject="Java"></Card>
-      
-
-
-<Add/>
-      </div>
-
+    {/* {!user ? (
+      <Login/>
+    ): ( */}
+       <Router>
+          <Switch>   
+            <Route path="/Chat" >
+              <ChatBox/>
+            </Route>
+            <Route path="/" >
+              <Home/>
+            </Route>
+          </Switch>
+        </Router>
+    {/* )
+    } */}
     </div>
   );
 }
