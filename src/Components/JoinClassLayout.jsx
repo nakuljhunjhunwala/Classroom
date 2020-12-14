@@ -4,6 +4,8 @@ import Avatar from "@material-ui/core/Avatar";
 import ButtonBase from "@material-ui/core/ButtonBase";
 // eslint-disable-next-line no-unused-vars
 import { ThemeProvider, makeStyles } from "@material-ui/core/styles";
+import { useStateValue } from "./StateProvider";
+import db from "../firebase";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,8 +22,19 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Joinclasslayout(props) {
   const [Code, setCode] = useState("");
-
+  const [{ user }, dispatch] = useStateValue();
   const classes = useStyles();
+  const student_id = user.uid;
+
+
+  
+  function joinClass() {
+    db.child(`students/user_data/${student_id}/classes`).update({
+      [Code]:Code
+      }
+      )
+    document.getElementById("createClass__bgCover").style.display = "none";
+}
 
   return (
     <div className="joinClass__bgCover" id="joinClass__bgCover">
@@ -45,7 +58,11 @@ export default function Joinclasslayout(props) {
         <ButtonBase 
         className="Join__btn" 
         // eslint-disable-next-line react/jsx-no-duplicate-props
-        className={classes.root}>
+        className={classes.root}
+        onClick={() => {
+          joinClass();
+          setCode("");
+        }}>
           Join
         </ButtonBase>
       </div>
