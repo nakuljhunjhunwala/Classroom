@@ -22,6 +22,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Joinclasslayout(props) {
   const [Code, setCode] = useState("");
+  
+  // eslint-disable-next-line no-unused-vars
   const [{ user }, dispatch] = useStateValue();
   const classes = useStyles();
   const student_id = user.uid;
@@ -33,7 +35,7 @@ export default function Joinclasslayout(props) {
       [Code]:Code
       }
       )
-    document.getElementById("createClass__bgCover").style.display = "none";
+    document.getElementById("joinClass__bgCover").style.display = "none";
 }
 
   return (

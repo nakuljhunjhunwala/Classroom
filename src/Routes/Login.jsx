@@ -22,14 +22,13 @@ export default function Login(props) {
         console.log("The read failed: " + errorObject.code);
       }
     );
-  }, []);
-
-  useEffect(() => {
     setDbUsers([]);
     for (let userKey in students?.user_data) {
       setDbUsers((dbUsers) => [...dbUsers, userKey]);
     }
   }, [students]);
+
+  
 
   const signIn = () => {
     auth
@@ -37,15 +36,10 @@ export default function Login(props) {
       .then((result) => {
         if (dbUsers.includes(result.user.uid)) {
         } else {
-          db.child(`students/user_data/`).update(
+          db.child(`students/user_data/${result.user.uid}`).update(
             {
-              [result.user.uid]: {
                 userID: result.user.uid,
                 student_name: result.user.displayName,
-                classes: {
-                  0: 1234,
-                },
-              },
             },
             (err) => {
               if (err) console.log(err);
