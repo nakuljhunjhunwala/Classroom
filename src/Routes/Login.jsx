@@ -1,5 +1,5 @@
 /* eslint-disable array-callback-return */
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./Login.css";
 import { auth, provider } from "../firebase";
 import { actionTypes } from "../Components/Reducer";
@@ -9,51 +9,90 @@ import db from "../firebase";
 export default function Login(props) {
   // eslint-disable-next-line no-unused-vars
   const [{ user }, dispatch] = useStateValue();
-  const [students, setstudents] = useState(null);
-  const [dbUsers, setDbUsers] = useState([]);
-
-  useEffect(() => {
-    db.on(
-      "value",
-      function (snapshot) {
-        setstudents(snapshot.val().students);
-      },
-      function (errorObject) {
-        console.log("The read failed: " + errorObject.code);
-      }
-    );
-    setDbUsers([]);
-    for (let userKey in students?.user_data) {
-      setDbUsers((dbUsers) => [...dbUsers, userKey]);
-    }
-  }, [students]);
-
-  
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [message, setMessage] = useState(null);
 
   const signIn = () => {
     auth
       .signInWithPopup(provider)
       .then((result) => {
-        if (dbUsers.includes(result.user.uid)) {
-        } else {
-          db.child(`students/user_data/${result.user.uid}`).update(
-            {
-                userID: result.user.uid,
-                student_name: result.user.displayName,
-            },
-            (err) => {
-              if (err) console.log(err);
-            }
-          );
-        }
+        db.child(`students/user_data/${result.user.uid}`).update(
+          {
+            userID: result.user.uid,
+            student_name: result.user.displayName,
+          },
+          (err) => {
+            if (err) console.log(err);
+          }
+        );
 
         dispatch({
           type: actionTypes.SET_USER,
           user: result.user,
         });
       })
-      .catch((error) => alert(error.message));
+      .catch((error) => setMessage(error.message));
   };
+
+  function customCreateUser(e) {
+    e.preventDefault();
+
+    auth
+      .createUserWithEmailAndPassword(email, password)
+      .then((user) => {
+        auth.currentUser
+          .updateProfile({
+            displayName: name,
+          })
+          .then(function () {
+            db.child(`students/user_data/${user.user.uid}`).update(
+              {
+                userID: user.user.uid,
+                student_name: user.user.displayName,
+                classes: {
+                  0: 1234,
+                },
+              },
+              (err) => {
+                if (err) setMessage(err.message);
+              }
+            );
+
+            dispatch({
+              type: actionTypes.SET_USER,
+              user: user.user,
+            });
+          })
+          .catch(function (error) {
+            setMessage(error.message);
+          });
+      })
+      .catch(function (error) {
+        if (error) {
+          setMessage(error.message);
+        }
+      });
+  }
+
+  function customLogin(e) {
+    e.preventDefault();
+
+    auth
+      .signInWithEmailAndPassword(email, password)
+      .then((user) => {
+        if (user) {
+          dispatch({
+            type: actionTypes.SET_USER,
+            user: user.user,
+          });
+        }
+      })
+      .catch((error) => {
+        setMessage(error.message);
+      });
+  }
 
   return (
     <div className="login_body">
@@ -78,12 +117,53 @@ export default function Login(props) {
           >
             <span>or</span>Sign up
           </h2>
-          <div className="form-holder">
-            <input type="text" className="input" placeholder="Name" />
-            <input type="email" className="input" placeholder="Email" />
-            <input type="password" className="input" placeholder="Password" />
-          </div>
-          <button className="submit-btn">Sign up</button>
+          <form>
+            <div className="form-holder">
+              <input
+                type="text"
+                className="input"
+                placeholder="Name"
+                value={name}
+                onChange={(e) => {
+                  setName(e.target.value);
+                }}
+                required
+              />
+              <input
+                type="email"
+                className="input"
+                placeholder="Email"
+                value={email}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                }}
+                required
+              />
+              <input
+                type="password"
+                className="input"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                }}
+                required
+              />
+            </div>
+            <button
+              type="submit"
+              className="submit-btn"
+              onClick={(e) => {
+                customCreateUser(e);
+                setName("");
+                setPassword("");
+                setEmail("");
+              }}
+            >
+              Sign up
+            </button>
+            {message && <p className="login_message">{message}</p>}
+          </form>
         </div>
         <div className="login ">
           <div className="center">
@@ -108,11 +188,42 @@ export default function Login(props) {
             >
               <span>or</span>Log in
             </h2>
-            <div className="form-holder">
-              <input type="email" className="input" placeholder="Email" />
-              <input type="password" className="input" placeholder="Password" />
-            </div>
-            <button className="submit-btn">Log in</button>
+            <form>
+              <div className="form-holder">
+                <input
+                  type="email"
+                  className="input"
+                  placeholder="Email"
+                  value={email}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                  }}
+                  required
+                />
+                <input
+                  type="password"
+                  className="input"
+                  placeholder="Password"
+                  value={password}
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                  }}
+                  required
+                />
+              </div>
+              <button
+                type="submit"
+                className="submit-btn"
+                onClick={(e) => {
+                  customLogin(e);
+                  setName("");
+                  setPassword("");
+                  setEmail("");
+                }}
+              >
+                Log in
+              </button>
+            </form>
             <br />
             <br />
             <button
@@ -124,6 +235,8 @@ export default function Login(props) {
             >
               Sign in with Google
             </button>
+
+            {message && <p className="login_message">{message}</p>}
           </div>
         </div>
       </div>

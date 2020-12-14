@@ -49,9 +49,6 @@ export default function Chatbox(props) {
 
   const sendMessage = (e) => {
     e.preventDefault();
-
-    console.log(subjectKey);
-
     db.child(`classes/subjects/${subjectKey}/message`).push(
       {
         userId: student_id,

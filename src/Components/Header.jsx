@@ -13,8 +13,9 @@ export default function Header() {
     return (
         <div className="home__header">
         <div className="home__title">
-        <Link  to={`/`}><img src={logo} alt="logo" /></Link>
+        <Link  to={`/`}><img src={logo} alt="logo" />
           <h2>Classroom</h2>
+          </Link>
         </div>
         <div className="home__profile">
         <Avatar alt="logo" src={user?.photoURL} />
