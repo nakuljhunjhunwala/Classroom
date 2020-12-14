@@ -1,0 +1,31 @@
+{
+
+  "classes" : {
+      "subjects" : [
+          {
+              "name": "Java",
+              "code": "1234",
+              "message":[
+                  {
+                      "userID": "73632",
+                      "user_name":"dev",
+                      "user_message":"Hello"
+                  }
+                      ]
+          }
+                  ]
+            },
+
+  
+      "students" : {
+              "user_data": [
+                  {
+                      "userID": "x4b3HcSnBVaWuYEMn0iRQ2n9FC12",
+                      "student_name":"Dev",
+                      "classes":["2345","1234","56789"]
+                  }
+              ]
+          }
+
+}
+

@@ -2,7 +2,7 @@ import React from 'react'
 import "./Card.css"
 import Avatar from '@material-ui/core/Avatar';
 
-export default function Card({subject}) {
+export default function Card({subject, subject_code}) {
     
 
     return (
@@ -14,7 +14,7 @@ export default function Card({subject}) {
     <div className="body">
         <div className="text">
     <h1>{subject}</h1>
-    <span>Subject code:- </span>
+    <span>Subject code:- {subject_code}</span>
         </div>
         
     </div>
