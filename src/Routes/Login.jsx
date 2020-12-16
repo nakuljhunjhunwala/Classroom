@@ -1,5 +1,5 @@
 /* eslint-disable array-callback-return */
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Login.css";
 import { auth, provider } from "../firebase";
 import { actionTypes } from "../Components/Reducer";
@@ -14,7 +14,23 @@ export default function Login(props) {
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState(null);
 
+
+useEffect(()=>{
+let subscrible = () => {auth.onAuthStateChanged((result)=>{
+  dispatch({
+    type: actionTypes.SET_USER,
+    user: result,
+  });
+})
+}
+
+subscrible();
+
+},[dispatch,user])
+
   const signIn = () => {
+    
+    
     auth
       .signInWithPopup(provider)
       .then((result) => {
@@ -27,6 +43,16 @@ export default function Login(props) {
             if (err) console.log(err);
           }
         );
+
+        db.child(`students/user_data/${result.user.uid}/classes`).update(
+          {
+           0:1234,
+          },
+          (err) => {
+            if (err) console.log(err);
+          }
+        );
+
 
         dispatch({
           type: actionTypes.SET_USER,
@@ -79,9 +105,7 @@ export default function Login(props) {
   function customLogin(e) {
     e.preventDefault();
 
-    auth
-      .signInWithEmailAndPassword(email, password)
-      .then((user) => {
+    auth.signInWithEmailAndPassword(email, password).then((user) => {
         if (user) {
           dispatch({
             type: actionTypes.SET_USER,

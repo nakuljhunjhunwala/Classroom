@@ -6,7 +6,9 @@
     /* box-shadow: inset 13px -114px 0px -112px rgba(0,0,0,0.3); */
   }
 
-  
+a {
+text-decoration: none;
+}
 .home__title h2{
     padding: 10px 0px 0px;
     font-weight: 500;
