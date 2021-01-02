@@ -16,12 +16,20 @@ export default function Login(props) {
 
 
 useEffect(()=>{
-let subscrible = () => {auth.onAuthStateChanged((result)=>{
-  dispatch({
-    type: actionTypes.SET_USER,
-    user: result,
+
+let subscrible = () => {
+  auth.setPersistence("session")
+  .then(function() {
+    return auth.onAuthStateChanged((result)=>{
+      dispatch({
+        type: actionTypes.SET_USER,
+        user: result,
+      });
+    })
+  })
+  .catch(function(error) {
+  console.log(error.message);
   });
-})
 }
 
 subscrible();
@@ -116,6 +124,14 @@ subscrible();
       .catch((error) => {
         setMessage(error.message);
       });
+  }
+
+  function forgetPassword() {
+    auth.sendPasswordResetEmail(email).then(function() {
+      setMessage("Reset link sent to your email address")
+    }).catch(function(error) {
+      setMessage(error.message)
+    });
   }
 
   return (
@@ -234,6 +250,9 @@ subscrible();
                   }}
                   required
                 />
+                <p className="reset_password" onClick={()=>{
+                  forgetPassword();
+                }}>Reset password?</p>
               </div>
               <button
                 type="submit"
