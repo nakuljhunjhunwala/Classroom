@@ -10,6 +10,7 @@ import db from "../firebase";
 import { useStateValue } from "../Components/StateProvider.js";
 import "./ChatBox.css";
 import FilePreview from "../Components/FilePreview.jsx";
+import Preloader from "../Components/Preloader.jsx";
 
 export default function Chatbox(props) {
   const [input, setInput] = useState("");
@@ -77,8 +78,12 @@ export default function Chatbox(props) {
     setInput("");
   };
 
+  setTimeout(function(){document.getElementById("preloader-container").style.display = 'none';}, 4000);
+
+
   return (
     <div>
+      <Preloader></Preloader>
       <FileUpload subID={subID} setIsOn={setIsOn} subjectKey={subjectKey}></FileUpload>
       <Header />
       <Divider />

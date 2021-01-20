@@ -11,6 +11,7 @@ import JoinClassLayout from "../Components/JoinClassLayout.jsx";
 import { Link } from "react-router-dom";
 import { useStateValue } from "../Components/StateProvider.js";
 import db from "../firebase";
+import Preloader from "../Components/Preloader";
 
 export default function Home(props) {
   const [user_subject, setSubject] = useState([]);
@@ -21,6 +22,8 @@ export default function Home(props) {
   const [{ user }, dispatch] = useStateValue();
 
   const student_id = user.uid;
+  
+ 
 
   useEffect(() => {
     db.on(
@@ -38,7 +41,7 @@ export default function Home(props) {
   useEffect(() => {
     if (students) {
       for (let student_data in students.user_data) {
-        console.log(students.user_data[student_data].classes);
+        
         students.user_data[student_data].userID === student_id &&
           setSubject(students.user_data[student_data].classes);
       }
@@ -48,11 +51,11 @@ export default function Home(props) {
   useEffect(() => {
     setData([]);
     if (user_subject[0] && classes.subjects) {
-      console.log("testing :" + user_subject);
+      
       for (let code in user_subject) {
         for (let chk_sub in classes.subjects) {
           if (classes.subjects[chk_sub].code === user_subject[code]) {
-            console.log(data);
+            
             setData((data) => [...data, classes.subjects[chk_sub]]);
           }
         }
@@ -60,8 +63,14 @@ export default function Home(props) {
     }
   }, [user_subject]);
 
+  
+
+
+  setTimeout(function(){document.getElementById("preloader-container").style.display = 'none';}, 4000);
+  
   return (
     <div>
+      <Preloader></Preloader>
       <JoinClassPopup />
       <CreateClassLayout />
       <JoinClassLayout />
@@ -69,11 +78,11 @@ export default function Home(props) {
       <Header />
       <Divider />
 
-      <div className="home__container">
+      <div className="home__container" id="home__container" >
         {data[0] ? (
           data.map((code) => {
             return (
-              <Link key={code?.code} to={`/Chat/${code?.code}/${student_id}`}>
+              <Link key={code?.code} to={`/Chat/${code?.code}/${student_id}`} >
                 <Card subject={code?.name} subject_code={code?.code} />{" "}
               </Link>
             );

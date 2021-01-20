@@ -5,6 +5,7 @@ import { auth, provider } from "../firebase";
 import { actionTypes } from "../Components/Reducer";
 import { useStateValue } from "../Components/StateProvider";
 import db from "../firebase";
+import Preloader from "../Components/Preloader";
 
 export default function Login(props) {
   // eslint-disable-next-line no-unused-vars
@@ -134,8 +135,14 @@ subscrible();
     });
   }
 
+  
+  window.onload = ()=>{
+    document.getElementById("preloader-container").style.display = "none";
+  }
+
   return (
     <div className="login_body">
+      <Preloader></Preloader>
       <div className="form-structor">
         <div className="signup slide-up">
           <h2
