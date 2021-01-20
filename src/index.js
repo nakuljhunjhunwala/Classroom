@@ -4,7 +4,6 @@ import "./index.css";
 import App from "./App";
 import reducer, { initialState } from "./Components/Reducer";
 import { StateProvider } from "./Components/StateProvider";
-import Preloader from "./Components/Preloader"
 
 
 ReactDOM.render(

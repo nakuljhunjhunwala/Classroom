@@ -4,7 +4,6 @@ import "./Header.css"
 import { Link } from 'react-router-dom'
 import { useStateValue } from "../Components/StateProvider.js";
 import logo from  "../images/logo.png"
-import Preloader from './Preloader';
 
 export default function Header() {
   // eslint-disable-next-line no-unused-vars
