@@ -11,7 +11,6 @@ import JoinClassLayout from "../Components/JoinClassLayout.jsx";
 import { Link } from "react-router-dom";
 import { useStateValue } from "../Components/StateProvider.js";
 import db from "../firebase";
-import Preloader from "../Components/Preloader";
 
 export default function Home(props) {
   const [user_subject, setSubject] = useState([]);
@@ -65,12 +64,8 @@ export default function Home(props) {
 
   
 
-
-  setTimeout(function(){document.getElementById("preloader-container").style.display = 'none';}, 4000);
-  
   return (
     <div>
-      <Preloader></Preloader>
       <JoinClassPopup />
       <CreateClassLayout />
       <JoinClassLayout />

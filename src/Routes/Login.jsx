@@ -5,7 +5,6 @@ import { auth, provider } from "../firebase";
 import { actionTypes } from "../Components/Reducer";
 import { useStateValue } from "../Components/StateProvider";
 import db from "../firebase";
-import Preloader from "../Components/Preloader";
 
 export default function Login(props) {
   // eslint-disable-next-line no-unused-vars
@@ -15,31 +14,27 @@ export default function Login(props) {
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState(null);
 
+  useEffect(() => {
+    let subscrible = () => {
+      auth
+        .setPersistence("session")
+        .then(function () {
+          return auth.onAuthStateChanged((result) => {
+            dispatch({
+              type: actionTypes.SET_USER,
+              user: result,
+            });
+          });
+        })
+        .catch(function (error) {
+          console.log(error.message);
+        });
+    };
 
-useEffect(()=>{
-
-let subscrible = () => {
-  auth.setPersistence("session")
-  .then(function() {
-    return auth.onAuthStateChanged((result)=>{
-      dispatch({
-        type: actionTypes.SET_USER,
-        user: result,
-      });
-    })
-  })
-  .catch(function(error) {
-  console.log(error.message);
-  });
-}
-
-subscrible();
-
-},[dispatch,user])
+    subscrible();
+  }, [dispatch, user]);
 
   const signIn = () => {
-    
-    
     auth
       .signInWithPopup(provider)
       .then((result) => {
@@ -55,13 +50,12 @@ subscrible();
 
         db.child(`students/user_data/${result.user.uid}/classes`).update(
           {
-           0:1234,
+            0: 1234,
           },
           (err) => {
             if (err) console.log(err);
           }
         );
-
 
         dispatch({
           type: actionTypes.SET_USER,
@@ -114,7 +108,9 @@ subscrible();
   function customLogin(e) {
     e.preventDefault();
 
-    auth.signInWithEmailAndPassword(email, password).then((user) => {
+    auth
+      .signInWithEmailAndPassword(email, password)
+      .then((user) => {
         if (user) {
           dispatch({
             type: actionTypes.SET_USER,
@@ -128,21 +124,20 @@ subscrible();
   }
 
   function forgetPassword() {
-    auth.sendPasswordResetEmail(email).then(function() {
-      setMessage("Reset link sent to your email address")
-    }).catch(function(error) {
-      setMessage(error.message)
-    });
+    auth
+      .sendPasswordResetEmail(email)
+      .then(function () {
+        setMessage("Reset link sent to your email address");
+      })
+      .catch(function (error) {
+        setMessage(error.message);
+      });
   }
 
   
-  window.onload = ()=>{
-    document.getElementById("preloader-container").style.display = "none";
-  }
 
   return (
     <div className="login_body">
-      <Preloader></Preloader>
       <div className="form-structor">
         <div className="signup slide-up">
           <h2
@@ -257,9 +252,14 @@ subscrible();
                   }}
                   required
                 />
-                <p className="reset_password" onClick={()=>{
-                  forgetPassword();
-                }}>Reset password?</p>
+                <p
+                  className="reset_password"
+                  onClick={() => {
+                    forgetPassword();
+                  }}
+                >
+                  Reset password?
+                </p>
               </div>
               <button
                 type="submit"
